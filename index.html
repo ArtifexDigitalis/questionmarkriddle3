@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Riddle 3</title>
+<style>
+    body {
+        background-color: black;
+        color: #00ff00;
+        font-family: "Consolas", monospace;
+        text-align: center;
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden;
+        transition: opacity 0.8s ease-in-out;
+    }
+
+    h1 {
+        font-size: 4em;
+        margin-top: 1em;
+        text-shadow: 0 0 20px #00ff00;
+    }
+
+    p.story {
+        width: 80%;
+        margin: 1em auto 2em;
+        line-height: 1.6;
+        font-size: 1.3em;
+    }
+
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(33, 1fr); /* 33 × 15 = 495 */
+        gap: 4px;
+        justify-items: center;
+        align-items: center;
+        padding: 20px;
+    }
+
+    .grid img {
+        width: 40px;
+        height: 40px;
+        cursor: pointer;
+        transition: transform 0.1s ease;
+    }
+
+    .grid img:hover {
+        transform: scale(1.2);
+    }
+
+    /* Glitch flicker for YOU FAILED */
+    @keyframes glitch {
+        0% { opacity: 1; text-shadow: 0 0 5px #00ff00, 0 0 10px #00ff00; }
+        10% { opacity: 0.6; text-shadow: 2px 2px 10px #00ff00; }
+        20% { opacity: 1; text-shadow: -2px -2px 20px #00ff00; }
+        30% { opacity: 0.7; text-shadow: 1px -1px 10px #00ff00; }
+        40% { opacity: 1; text-shadow: 0 0 15px #00ff00, 0 0 25px #00ff00; }
+        50% { opacity: 0.5; text-shadow: -1px 1px 5px #00ff00; }
+        60% { opacity: 1; text-shadow: 0 0 20px #00ff00; }
+        70% { opacity: 0.8; text-shadow: 3px -3px 15px #00ff00; }
+        80% { opacity: 1; text-shadow: 0 0 25px #00ff00; }
+        90% { opacity: 0.6; text-shadow: -2px 2px 20px #00ff00; }
+        100% { opacity: 1; text-shadow: 0 0 20px #00ff00; }
+    }
+
+    .glitch {
+        animation: glitch 0.8s infinite;
+    }
+
+    .fade-out {
+        opacity: 0;
+    }
+</style>
+</head>
+<body>
+    <h1>Riddle 3</h1>
+    <p class="story">
+        The riddler’s laughter echoes in your mind as the lights flicker.<br>
+        You step closer to the screen, seeing endless question marks.<br>
+        Somewhere among them lies the answer — or your doom.<br>
+        Choose wisely, for only one path leads forward.<br>
+        The rest… are merely traps.
+    </p>
+
+    <div class="grid" id="questionGrid"></div>
+
+    <audio id="riddleAudio" src="riddle3.mp3"></audio>
+
+    <script>
+        const grid = document.getElementById("questionGrid");
+        const rows = 15;
+        const cols = 33;  // 15 × 33 = 495
+        const correctRow = 13;
+        const correctCol = 2;
+        const correctIndex = (correctRow - 1) * cols + (correctCol - 1);
+
+        for (let i = 0; i < rows * cols; i++) {
+            const img = document.createElement("img");
+            img.src = "question_mark.jpg";
+
+            img.addEventListener("click", () => {
+                if (i === correctIndex) {
+                    document.getElementById("riddleAudio").play();
+                } else {
+                    document.body.classList.add("fade-out");
+                    setTimeout(() => {
+                        document.body.innerHTML = `
+                            <div style="
+                                text-align:center; 
+                                color:#00ff00; 
+                                background:black; 
+                                height:100vh; 
+                                display:flex; 
+                                flex-direction:column; 
+                                justify-content:center; 
+                                align-items:center;
+                            ">
+                                <h1 class='glitch' style="
+                                    font-size:5em; 
+                                    text-shadow:0 0 20px #00ff00;
+                                    animation:glitch 1s infinite;
+                                ">YOU FAILED!</h1>
+                                <img src="theriddler.jpg" alt="The Riddler" style="
+                                    width:400px; 
+                                    margin-top:20px; 
+                                    border-radius:10px;
+                                ">
+                            </div>
+                        `;
+                        document.body.classList.remove("fade-out");
+                    }, 800);
+                }
+            });
+
+            grid.appendChild(img);
+        }
+    </script>
+</body>
+</html>

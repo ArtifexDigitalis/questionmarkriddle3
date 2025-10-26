@@ -2,146 +2,174 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Riddle 3</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ivan and Koshchei the Deathless</title>
+
 <!-- Favicon -->
-<link rel="icon" href="/favicon.ico" type="image/x-icon"> <!-- .ico format -->
+<link rel="icon" href="/favicon.ico" type="image/x-icon">
 <link rel="apple-touch-icon" sizes="180x180" href="favicon_io/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon_io/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="favicon_io/favicon-16x16.png">
 <link rel="manifest" href="favicon_io/site.webmanifest">
-    
+
 <style>
-    body {
-        background-color: black;
-        color: #00ff00;
-        font-family: "Consolas", monospace;
-        text-align: center;
-        margin: 0;
-        padding: 0;
-        overflow-x: hidden;
-        transition: opacity 0.8s ease-in-out;
-    }
+/* === General Layout === */
+body {
+    background-color: black;
+    color: #f5e7a1;
+    font-family: "Georgia", serif;
+    margin: 0;
+    text-align: center;
+    transition: opacity 0.8s ease;
+}
 
-    h1 {
-        font-size: 4em;
-        margin-top: 1em;
-        text-shadow: 0 0 20px #00ff00;
-    }
+body.fade-out {
+    opacity: 0;
+}
 
-    p.story {
-        width: 80%;
-        margin: 1em auto 2em;
-        line-height: 1.6;
-        font-size: 1.3em;
-    }
+/* === Title and Story === */
+.title {
+    font-size: 3rem;
+    margin-top: 40px;
+}
 
-    .grid {
-        display: grid;
-        grid-template-columns: repeat(33, 1fr); /* 33 × 15 = 495 */
-        gap: 4px;
-        justify-items: center;
-        align-items: center;
-        padding: 20px;
-    }
+.story {
+    max-width: 1100px;
+    margin: 20px auto;
+    line-height: 1.6;
+    font-size: 1.1rem;
+    text-align: center;
+    white-space: pre-line;
+}
 
-    .grid img {
-        width: 40px;
-        height: 40px;
-        cursor: pointer;
-        transition: transform 0.1s ease;
-    }
+.the-end {
+    font-family: "Times New Roman", serif;
+    font-style: italic;
+    font-size: 1.3rem;
+    color: #f2e6a0;
+    margin-bottom: 50px;
+}
 
-    .grid img:hover {
-        transform: scale(1.2);
-    }
+/* === Question Mark Grid === */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(25, 1fr);
+    gap: 8px;
+    justify-items: center;
+    padding: 20px;
+    max-width: 90%;
+    margin: 0 auto 50px;
+}
 
-    /* Glitch flicker for YOU FAILED */
-    @keyframes glitch {
-        0% { opacity: 1; text-shadow: 0 0 5px #00ff00, 0 0 10px #00ff00; }
-        10% { opacity: 0.6; text-shadow: 2px 2px 10px #00ff00; }
-        20% { opacity: 1; text-shadow: -2px -2px 20px #00ff00; }
-        30% { opacity: 0.7; text-shadow: 1px -1px 10px #00ff00; }
-        40% { opacity: 1; text-shadow: 0 0 15px #00ff00, 0 0 25px #00ff00; }
-        50% { opacity: 0.5; text-shadow: -1px 1px 5px #00ff00; }
-        60% { opacity: 1; text-shadow: 0 0 20px #00ff00; }
-        70% { opacity: 0.8; text-shadow: 3px -3px 15px #00ff00; }
-        80% { opacity: 1; text-shadow: 0 0 25px #00ff00; }
-        90% { opacity: 0.6; text-shadow: -2px 2px 20px #00ff00; }
-        100% { opacity: 1; text-shadow: 0 0 20px #00ff00; }
-    }
+.question {
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
 
-    .glitch {
-        animation: glitch 0.8s infinite;
-    }
+.question:hover {
+    transform: scale(1.2);
+}
 
-    .fade-out {
-        opacity: 0;
-    }
+/* === Failure Screen === */
+#failScreen {
+    display: none;
+    background-color: black;
+    color: #00ff66;
+    font-family: 'Courier New', monospace;
+    position: fixed;
+    inset: 0;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    transition: opacity 0.8s ease;
+}
+
+#failScreen.visible {
+    display: flex;
+    opacity: 1;
+}
+
+#failScreen h1 {
+    font-size: 5rem;
+    text-shadow: 0 0 20px #00ff66;
+    animation: flicker 2s infinite;
+}
+
+@keyframes flicker {
+    0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { opacity: 1; }
+    20%, 24%, 55% { opacity: 0.3; }
+}
+
+#failScreen img {
+    margin-top: 30px;
+    width: 350px;
+    border-radius: 10px;
+}
 </style>
 </head>
+
 <body>
-    <h1>Riddle 3</h1>
+<div id="mainContainer">
+    <h1 class="title">Ivan and Koshchei the Deathless</h1>
+
     <p class="story">
-        The riddler’s laughter echoes in your mind as the lights flicker.<br>
-        You step closer to the screen, seeing endless question marks.<br>
-        Somewhere among them lies the answer — or your doom.<br>
-        Choose wisely, for only one path leads forward.<br>
-        The rest… are merely traps.
+		There was once a handsome prince roaming the cobbled streets of his city in the company of a fair maiden of unparalleled beauty. As they tried to find a quiet place to enjoy each other's presence, in the far end of a secluded road, they came across a sad looking old man in shackles. Chained to the wall, the old stranger saw them and begged them for a glass of water. The young couple, moved by the old man's pitiful state, indulged him and brought him a goblet full of water from a fountain nearby. The old man drunk it all and after a moment he transformed. From a tired-looking old man to a menacing looking figure thrice his previous size. "YOU FOOLS!", he cried as his shackles snapped open. "I am Koshchei the Deathless! You have been tricked into freeing me, and now I am going to take this young lady with me to my tower forever". And before the young prince, Ivan, could do anything, Koshchei had whistled and a giant magical horse appeared. He swept the lady and off they went, faster than any ordinary horse could go. Ivan tried many times to rescue his beloved but every time, the magical horse stationed outside the tower alerted Koshchei and they intercepted the young couple before they reached home. Ivan, knowing he could not kill Koshchei the Deathless, knew he had to outsmart him, outrun him. He had heard of an old woman breeding the fastest magical horses in a land far from there. Ivan had to go across 2 mountains to find her. When he finally did, he met Baba Yaga. "These horses are faster than the wind's breath, but if you don't catch one until the sun sets, you prince Ivan will meet your death", she said ominously. So Ivan, knowing he could not surprise them or outrun them, decided to lure one with a stack of fresh fruit he found in the witch's garden. He managed to do it, leaped on the steed's back, and ride away straight to Koshchei's tower before Baba Yaga realized he had stolen some of her fruit. When he reached the dark formidable looking tower, he decided to head for the dungeon. He went down 13 steps and found his dearest beloved curled up in a corner. As soon as she saw him she leapt to his arms and Ivan took her and run off with her on his new horse. Now, no matter how much Koshchei tried, his horse was no match for Ivan's. Evil Koshchei was not able to separate Ivan from his young love ever again.
     </p>
 
-    <div class="grid" id="questionGrid"></div>
+    <p class="the-end">The End.</p>
 
-    <audio id="riddleAudio" src="riddle3.mp3"></audio>
+    <div class="grid" id="grid"></div>
+</div>
 
-    <script>
-        const grid = document.getElementById("questionGrid");
-        const rows = 15;
-        const cols = 33;  // 15 × 33 = 495
-        const correctRow = 13;
-        const correctCol = 2;
-        const correctIndex = (correctRow - 1) * cols + (correctCol - 1);
+<!-- Failure Screen -->
+<div id="failScreen">
+    <h1>YOU FAILED!</h1>
+    <img src="theriddler.jpg" alt="The Riddler">
+</div>
 
-        for (let i = 0; i < rows * cols; i++) {
-            const img = document.createElement("img");
-            img.src = "question_mark.jpg";
+<audio id="riddleAudio" src="riddle3.mp3"></audio>
+<audio id="failAudio" src="failed.mp3"></audio>
 
-            img.addEventListener("click", () => {
-                if (i === correctIndex) {
-                    document.getElementById("riddleAudio").play();
-                } else {
-                    document.body.classList.add("fade-out");
-                    setTimeout(() => {
-                        document.body.innerHTML = `
-                            <div style="
-                                text-align:center; 
-                                color:#00ff00; 
-                                background:black; 
-                                height:100vh; 
-                                display:flex; 
-                                flex-direction:column; 
-                                justify-content:center; 
-                                align-items:center;
-                            ">
-                                <h1 class='glitch' style="
-                                    font-size:5em; 
-                                    text-shadow:0 0 20px #00ff00;
-                                    animation:glitch 1s infinite;
-                                ">YOU FAILED!</h1>
-                                <img src="theriddler.jpg" alt="The Riddler" style="
-                                    width:400px; 
-                                    margin-top:20px; 
-                                    border-radius:10px;
-                                ">
-                            </div>
-                        `;
-                        document.body.classList.remove("fade-out");
-                    }, 800);
-                }
-            });
+<script>
+const grid = document.getElementById("grid");
+const totalImages = 500;
+const cols = 25;
+const rows = Math.ceil(totalImages / cols);
 
-            grid.appendChild(img);
-        }
-    </script>
+const correctRow = 13;
+const correctCol = 2;
+
+for (let r = 1; r <= rows; r++) {
+    for (let c = 1; c <= cols; c++) {
+        if ((r - 1) * cols + c > totalImages) break;
+        const img = document.createElement("img");
+        img.src = "question_mark.jpg";
+        img.classList.add("question");
+        img.addEventListener("click", () => handleClick(r, c));
+        grid.appendChild(img);
+    }
+}
+
+function handleClick(r, c) {
+    document.body.classList.add("fade-out");
+    if (r === correctRow && c === correctCol) {
+        setTimeout(() => {
+            document.getElementById("riddleAudio").play();
+            document.body.classList.remove("fade-out");
+        }, 500);
+    } else {
+        setTimeout(() => {
+            document.getElementById("failAudio").play();
+            document.getElementById("mainContainer").style.display = "none";
+            const fail = document.getElementById("failScreen");
+            fail.classList.add("visible");
+            document.body.classList.remove("fade-out");
+        }, 800);
+    }
+}
+</script>
 </body>
-
 </html>
